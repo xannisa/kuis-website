@@ -21,14 +21,14 @@ def register():
         cursor = conn.cursor()
 
         # 2️⃣ Check for duplicate username
-        cursor.execute("SELECT id FROM users WHERE username = ?", (username,))
+        cursor.execute("SELECT id FROM users WHERE username = %s", (username,))
         if cursor.fetchone():
             flash("Username already exists!")
             conn.close()
             return redirect(url_for("register"))
 
         # 3️⃣ Check for duplicate email
-        cursor.execute("SELECT id FROM users WHERE email = ?", (email,))
+        cursor.execute("SELECT id FROM users WHERE email = %s", (email,))
         if cursor.fetchone():
             flash("Email already exists!")
             conn.close()
@@ -39,7 +39,7 @@ def register():
 
         # 5️⃣ Insert new user
         cursor.execute(
-            "INSERT INTO users (username, email, password) VALUES (?, ?, ?)",
+            "INSERT INTO users (username, email, password) VALUES (%s, %s, %s)",
             (username, email, hashed_pw)
         )
         conn.commit()
@@ -58,11 +58,11 @@ def login():
         username = request.form.get("username")
         password = request.form.get("password")
 
-        conn = get_db_connection(DB_USER)
+        conn = get_db_connection(db_user)
         cursor = conn.cursor()
-
+        #
         # 1️⃣ Cari user berdasarkan username
-        cursor.execute("SELECT id, password FROM users WHERE username = ?", (username,))
+        cursor.execute("SELECT id, password FROM users WHERE username = %s", (username,))
         user = cursor.fetchone()
         conn.close()
 
@@ -83,7 +83,6 @@ def login():
         session["user_id"] = user_id
         session["username"] = username
 
-        flash("Login successful!")
         return redirect(url_for("leaderboard"))   # ganti ke halaman tujuanmu
 
     return render_template("login.html")

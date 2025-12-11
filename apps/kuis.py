@@ -15,7 +15,7 @@ def kuis_start():
     cursor = conn.cursor()
 
     # Ambil 5 ID soal secara acak (sesuaikan dengan jumlah soal di input_soal.py)
-    cursor.execute("SELECT id FROM questions ORDER BY RANDOM() LIMIT 5") 
+    cursor.execute("SELECT id FROM questions ORDER BY RAND() LIMIT 5") 
     question_ids = [row[0] for row in cursor.fetchall()]
     conn.close()
 
@@ -56,9 +56,11 @@ def kuis():
             return redirect(url_for("kuis"))
         
         # Cek jawaban dengan DB
-        conn = sqlite3.connect("soal.db")
+        # Cek jawaban dengan DB (Ubah koneksi dan sintaks SQL)
+        conn = get_db_connection(db_soal)
         cursor = conn.cursor()
-        cursor.execute("SELECT correct_answer FROM questions WHERE id = ?", (qid_from_form,))
+        # Placeholder diubah: ? menjadi %s
+        cursor.execute("SELECT correct_answer FROM questions WHERE id = %s", (qid_from_form,))
         correct_answer = cursor.fetchone()[0]
         conn.close()
 
@@ -89,9 +91,11 @@ def kuis():
 
     current_qid = questions[index]
 
-    conn = sqlite3.connect("soal.db")
+    # Ubah koneksi dan sintaks SQL:
+    conn = get_db_connection(db_soal)
     cursor = conn.cursor()
-    cursor.execute("SELECT id, question, option_a, option_b, option_c, option_d FROM questions WHERE id = ?", (current_qid,))
+    # Placeholder diubah: ? menjadi %s
+    cursor.execute("SELECT id, question, option_a, option_b, option_c, option_d FROM questions WHERE id = %s", (current_qid,))
     q_data = cursor.fetchone()
     conn.close()
 
@@ -128,13 +132,15 @@ def kuis_result():
     user_id = session.get("user_id")
 
     # Update skor jika skor baru lebih tinggi dari skor yang sudah tersimpan
-    conn = sqlite3.connect(DB_USER)
+    conn = get_db_connection(db_user)
     cursor = conn.cursor()
-    cursor.execute("SELECT score FROM users WHERE id = ?", (user_id,))
+    # Placeholder diubah: ? menjadi %s
+    cursor.execute("SELECT score FROM users WHERE id = %s", (user_id,))
     current_best_score = cursor.fetchone()[0]
 
     if final_score > current_best_score:
-        cursor.execute("UPDATE users SET score = ? WHERE id = ?", (final_score, user_id))
+        # Placeholder diubah: ? menjadi %s
+        cursor.execute("UPDATE users SET score = %s WHERE id = %s", (final_score, user_id))
         flash_message = f"Kuis selesai! Skor akhir Anda adalah {final_score}. Anda berhasil mencetak skor terbaik baru!"
     else:
         flash_message = f"Kuis selesai! Skor akhir Anda adalah {final_score}. Skor terbaik Anda tetap {current_best_score}."
@@ -145,5 +151,4 @@ def kuis_result():
     # Simpan skor ini di session sementara untuk ditampilkan di leaderboard
     session['last_quiz_score'] = final_score
 
-    flash(flash_message, "success")
     return redirect(url_for("leaderboard"))

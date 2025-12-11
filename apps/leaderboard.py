@@ -4,7 +4,7 @@ import sqlite3
 
 @app.route("/leaderboard")
 def leaderboard():
-    conn = get_db_connection(db_user)
+    conn = get_db_connection(db_user) # Hapus parameter (db_user)
     cursor = conn.cursor()
 
     # ambil data username dan score, urutkan dari tertinggi

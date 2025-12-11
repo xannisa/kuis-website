@@ -1,13 +1,19 @@
 from flask import Flask, session
-import sqlite3
+import mysql.connector # <--- IMPOR BARU
+from datetime import datetime, timedelta
+# ... (impor lain)
 
 # Initialize app
 app = Flask(__name__)
 app.secret_key = "any_secret_key" 
 
-# Define constants
-DB_USER = "users.db"
-DB_SOAL = "soal.db"
+# --- KONSTANTA HOST DATABASE MYSQL ---
+MYSQL_HOST = "nissakhra.mysql.pythonanywhere-services.com"
+MYSQL_USER = "nissakhra"
+MYSQL_PASSWORD = "username!"
+db_user = "nissakhra$users"
+db_soal = "nissakhra$soal"
+
 cities = [
             "jakarta", "bandung", "surabaya",
             "medan", "makassar", "yogyakarta",
@@ -16,44 +22,76 @@ cities = [
             "batam", "manado", "banjarmasin"
         ]
 
-# Context processor
-@app.context_processor
-def inject_user():
-    return dict(session=session)
+# --- FUNGSI UTAMA KONEKSI MYSQL ---
+def get_db_connection(database):
+    """Mengembalikan objek koneksi ke database MySQL."""
+    try:
+        conn = mysql.connector.connect(
+            host=MYSQL_HOST,
+            user=MYSQL_USER,
+            password=MYSQL_PASSWORD,
+            database=database,
+            charset='utf8mb4'
+        )
+        return conn
+    except mysql.connector.Error as err:
+        print(f"Error Koneksi MySQL: {err}")
+        # Di lingkungan produksi, Anda mungkin ingin me-raise exception 
+        # atau melakukan logging yang lebih baik.
+        return None
+
+# --- FUNGSI INIT DB BARU UNTUK MYSQL ---
 
 def init_db():
-    conn = sqlite3.connect(DB_USER)
+    conn = get_db_connection(db_user)
+    if conn is None:
+        return # Gagal koneksi, keluar
+
     cursor = conn.cursor()
 
+    # Membuat tabel users
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT UNIQUE,
-            email TEXT UNIQUE,
-            password TEXT,
-            score INTEGER DEFAULT 0
-        )
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            username VARCHAR(255) UNIQUE NOT NULL,
+            email VARCHAR(255) UNIQUE NOT NULL,
+            password VARCHAR(255) NOT NULL,
+            score INT DEFAULT 0
+        ) ENGINE=InnoDB
     """)
-
+    
     conn.commit()
+    cursor.close()
     conn.close()
+
 init_db()
 
+
 def init_soal_db():
-    """Hanya untuk memastikan tabel questions ada, data diisi via input_soal.py"""
-    conn = sqlite3.connect(DB_SOAL)
+    """Membuat tabel questions untuk soal kuis."""
+    conn = get_db_connection(db_soal)
+    if conn is None:
+        return # Gagal koneksi, keluar
+
     cursor = conn.cursor()
+
+    # Membuat tabel questions
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS questions (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            question TEXT,
-            option_a TEXT,
-            option_b TEXT,
-            option_c TEXT,
-            option_d TEXT,
-            correct_answer TEXT
-        )
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            question TEXT NOT NULL,
+            option_a VARCHAR(500),
+            option_b VARCHAR(500),
+            option_c VARCHAR(500),
+            option_d VARCHAR(500),
+            correct_answer VARCHAR(1) NOT NULL
+        ) ENGINE=InnoDB
     """)
+
     conn.commit()
+    cursor.close()
     conn.close()
+
 init_soal_db()
+
+# ... (lanjutan code Flask Anda)

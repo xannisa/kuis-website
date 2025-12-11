@@ -1,6 +1,6 @@
 from flask import request, redirect, url_for, render_template, flash, session
-from .__init__ import app, DB_USER
-import sqlite3
+from .__init__ import app, get_db_connection, db_user
+#import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
 
 @app.route("/register", methods=["GET", "POST"])
@@ -17,7 +17,7 @@ def register():
             flash("Passwords do not match!")
             return redirect(url_for("register"))
 
-        conn = sqlite3.connect(DB_USER)
+        conn = get_db_connection(db_user)
         cursor = conn.cursor()
 
         # 2️⃣ Check for duplicate username
@@ -58,7 +58,7 @@ def login():
         username = request.form.get("username")
         password = request.form.get("password")
 
-        conn = sqlite3.connect(DB_USER)
+        conn = get_db_connection(DB_USER)
         cursor = conn.cursor()
 
         # 1️⃣ Cari user berdasarkan username

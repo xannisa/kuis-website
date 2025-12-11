@@ -1,5 +1,5 @@
 from flask import request, session, render_template, redirect, url_for
-from .__init__ import app, DB_USER, DB_SOAL, cities
+from .__init__ import app, cities
 import sqlite3
 from datetime import datetime, timedelta
 

@@ -1,5 +1,5 @@
 from flask import request, session, flash, redirect, url_for, render_template
-from .__init__ import app, DB_USER, DB_SOAL
+from .__init__ import app, db_user, db_soal, get_db_connection
 import sqlite3
 
 # --- RUTE KUIS (FLOW PER SOAL) ---
@@ -11,7 +11,7 @@ def kuis_start():
         flash("Anda harus login untuk memulai kuis.")
         return redirect(url_for("login"))
 
-    conn = sqlite3.connect(DB_SOAL)
+    conn = get_db_connection(db_soal)
     cursor = conn.cursor()
 
     # Ambil 5 ID soal secara acak (sesuaikan dengan jumlah soal di input_soal.py)

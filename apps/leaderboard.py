@@ -19,5 +19,3 @@ def leaderboard():
     last_score = session.pop('last_quiz_score', None)
 
     return render_template("leaderboard.html", users=leaderboard_data, last_score=last_score)
-
-# ... (setelah fungsi leaderboard)

@@ -1,0 +1,102 @@
+[
+    {
+        "question": "Apakah kepanjangan yang paling tepat dari akronim NLP?",
+        "options": {
+            "A": "Neuro-Linguistik Psikologi",
+            "B": "Neurologi-Lingual Pemikiran",
+            "C": "Neuro-Linguistic Programming",
+            "D": "Nature-Logic Psychology"
+        },
+        "answer": "C"
+    },
+    {
+        "question": "Siapakah dua tokoh yang diakui sebagai pendiri awal dan pengembang utama NLP?",
+        "options": {
+            "A": "Sigmund Freud dan Carl Jung",
+            "B": "Ivan Pavlov dan B.F. Skinner",
+            "C": "Virginia Satir dan Milton H. Erickson",
+            "D": "Richard Bandler dan John Grinder"
+        },
+        "answer": "D"
+    },
+    {
+        "question": "Manakah di antara pernyataan berikut yang merupakan salah satu 'presuposisi' dasar dalam NLP?",
+        "options": {
+            "A": "Peta adalah wilayah",
+            "B": "Komunikasi yang efektif hanya terjadi jika kata-kata 100% akurat",
+            "C": "Tidak ada kegagalan, hanya umpan balik",
+            "D": "Orang-orang termotivasi hanya oleh uang dan kekuasaan"
+        },
+        "answer": "C"
+    },
+    {
+        "question": "Dalam konteks Sistem Representasional, apa yang diwakili oleh huruf 'K' dalam VAKOG?",
+        "options": {
+            "A": "Kognitif (Pemikiran)",
+            "B": "Kinestetik (Perasaan/Sentuhan)",
+            "C": "Konteks (Lingkungan)",
+            "D": "Kreatif (Imajinasi)"
+        },
+        "answer": "B"
+    },
+    {
+        "question": "Teknik NLP yang melibatkan pengaitan respons internal tertentu dengan pemicu eksternal disebut...",
+        "options": {
+            "A": "Reframing",
+            "B": "Pattern Interrupt",
+            "C": "Anchoring (Penjangkaran)",
+            "D": "Swish Pattern"
+        },
+        "answer": "C"
+    },
+    {
+        "question": "Tujuan utama dari penggunaan Meta Model dalam NLP adalah untuk...",
+        "options": {
+            "A": "Mengubah makna suatu peristiwa",
+            "B": "Menggunakan pola bahasa yang kabur",
+            "C": "Mengidentifikasi dan mengklarifikasi distorsi, generalisasi, dan penghapusan",
+            "D": "Menciptakan kondisi emosional puncak"
+        },
+        "answer": "C"
+    },
+    {
+        "question": "Dalam Model Komunikasi NLP, ada tiga proses filter utama: ...",
+        "options": {
+            "A": "VAKOG, Submodalitas, dan Reframing",
+            "B": "Persepsi, Emosi, dan Keputusan",
+            "C": "Metamodel, Milton Model, dan Strategi",
+            "D": "Penghapusan, Distorsi, dan Generalisasi"
+        },
+        "answer": "D"
+    },
+    {
+        "question": "Dalam NLP, 'submodalitas' mengacu pada...",
+        "options": {
+            "A": "Cara orang beralih antara sistem representasional",
+            "B": "Strategi di balik semua keputusan",
+            "C": "Detail-detail indrawi yang membentuk pengalaman internal",
+            "D": "Nilai dan keyakinan inti"
+        },
+        "answer": "C"
+    },
+    {
+        "question": "Teknik 'Swish Pattern' dalam NLP bertujuan untuk...",
+        "options": {
+            "A": "Menetapkan jangkar kinestetik",
+            "B": "Mengubah keyakinan yang membatasi",
+            "C": "Mengubah pola perilaku yang tidak diinginkan dengan mengganti gambaran mental",
+            "D": "Menciptakan bahasa yang kabur untuk trance"
+        },
+        "answer": "C"
+    },
+    {
+        "question": "Milton Model dalam NLP dinamai dari siapa dan paling sering digunakan untuk apa?",
+        "options": {
+            "A": "Virginia Satir; untuk memecahkan konflik keluarga",
+            "B": "Gregory Bateson; untuk menganalisis sistem sosial",
+            "C": "Milton H. Erickson; untuk menciptakan ambiguitas dan trance",
+            "D": "Alfred Korzybski; untuk mengoreksi bias dalam bahasa"
+        },
+        "answer": "C"
+    }
+]

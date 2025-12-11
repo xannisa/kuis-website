@@ -1,6 +1,5 @@
 from flask import request, session, render_template, redirect, url_for
 from .__init__ import app, cities
-import sqlite3
 from datetime import datetime, timedelta
 
 @app.route("/")
@@ -12,7 +11,6 @@ def home():
     if request.method == "POST":
         city = request.form.get("city")
 
-        # Contoh data cuaca dummy (bisa diganti API)
         today = datetime.today()
         days = ["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"]
 
@@ -22,8 +20,8 @@ def home():
             weather.append({
                 "day": days[date.weekday()],
                 "date": date.strftime("%d-%m-%Y"),
-                "day_temp": 28 + i,      # contoh random
-                "night_temp": 22 + i     # contoh random
+                "day_temp": 28 + i, 
+                "night_temp": 22 + i  
             })
 
         return render_template("home.html",

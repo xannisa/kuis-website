@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Papan Peringkat Kuis</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<link href="//fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i" rel="stylesheet">
+</head>
+<body>
+	<div class="main-w3layouts wrapper">
+        {% include 'header.html' %} 
+        <h1>Papan Peringkat Kuis</h1> 
+        
+		<div class="main-agileinfo">
+
+            <div class="leaderboard-container">
+                <h1 class="leaderboard-title">Hasil Terbaik</h1>
+                
+                {% if last_score is not none %}
+                <p class="score-message">
+                    Skor terakhir kamu: **{{ last_score }}**
+                </p>
+                {% endif %}
+
+                <table class="leaderboard-table">
+                    <tr>
+                        <th>Nama Pemain</th>
+                        <th>Skor</th>
+                    </tr>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.score }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+		</div>
+
+        <div class="colorlibcopy-agile">
+        <p>© 2025 Kuis App | Developed by @nissakhra</p>
+        </div>
+		<ul class="colorlib-bubbles">
+			<li></li><li></li><li></li><li></li><li></li>
+			<li></li><li></li><li></li><li></li><li></li>
+		</ul>
+	</div>
+	</body>
+</html>

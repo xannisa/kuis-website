@@ -1,0 +1,22 @@
+<div class="pretty-header">
+    <div class="header-title">
+        {% if session.get('username') %}
+            Halo, {{ session.get('username') }}
+        {% else %}
+            Welcome
+        {% endif %}
+    </div>
+
+    <div class="header-buttons">
+        <a href="{{ url_for('home') }}" class="btn-pretty">Home</a>
+        
+        {% if session.get('user_id') %}
+            <a href="{{ url_for('leaderboard') }}" class="btn-pretty register">Leaderboard</a>
+            <a href="{{ url_for('kuis_start') }}" class="btn-pretty register">Kuis</a>
+            <a href="{{ url_for('logout') }}" class="btn-pretty register">Logout</a>
+        {% else %}
+            <a href="{{ url_for('register') }}" class="btn-pretty register">Register</a>
+            <a href="{{ url_for('login') }}" class="btn-pretty register">Login</a>
+        {% endif %}
+    </div>
+</div>

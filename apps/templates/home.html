@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Beranda Cuaca</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+<link href="//fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i" rel="stylesheet">
+</head>
+
+<script>
+const cities = {{ cities | tojson }}; // ambil list dari Flask
+
+const input = document.getElementById("city-input");
+const suggestions = document.getElementById("suggestions");
+
+// ketika user mengetik
+input.addEventListener("input", function() {
+    const text = this.value.toLowerCase();
+    suggestions.innerHTML = "";
+
+    if (text.length === 0) {
+        suggestions.style.display = "none";
+        return;
+    }
+
+    // filter kota
+    const matched = cities.filter(c => c.toLowerCase().includes(text));
+
+    if (matched.length === 0) {
+        suggestions.style.display = "none";
+        return;
+    }
+
+    // tampilkan saran
+    matched.forEach(c => {
+        const div = document.createElement("div");
+        div.style.padding = "8px";
+        div.style.cursor = "pointer";
+        div.innerHTML = c.charAt(0).toUpperCase() + c.slice(1);
+        
+        div.onclick = function() {
+            input.value = c;
+            suggestions.style.display = "none";
+        };
+
+        div.onmouseover = function() {
+            div.style.background = "rgba(255,255,255,0.3)";
+        };
+
+        div.onmouseout = function() {
+            div.style.background = "transparent";
+        };
+
+        suggestions.appendChild(div);
+    });
+
+    suggestions.style.display = "block";
+});
+
+// mencegah form submit tanpa kota valid
+function submitCity() {
+    if (input.value.trim() === "") return false;
+    return true;
+}
+</script>
+
+<body>
+{% include 'header.html' %}
+<div class="main-w3layouts wrapper">
+    
+    <h1>Perkiraan Cuaca</h1>
+
+    <div class="main-agileinfo">
+        <div class="agileits-top" style="text-align:center;">
+
+            <!-- Input kota -->
+            <form action="#" method="post" style="margin-bottom: 20px;" onsubmit="return submitCity()">
+                
+                <!-- Input kota -->
+                <input class="text" type="text" name="city" id="city-input"
+                    placeholder="Masukkan nama kota..." autocomplete="off" required="">
+                
+                <!-- kotak suggestion -->
+                <div id="suggestions"
+                    style="background:rgba(0,0,0,0.3); 
+                            backdrop-filter: blur(4px);
+                            border:1px solid rgba(255,255,255,0.4);
+                            color:white;
+                            display:none;
+                            position:relative;
+                            z-index:1000;
+                            text-align:left;">
+                </div>
+
+                <input type="submit" value="LIHAT CUACA">
+            </form>
+
+            <!-- Jika data cuaca tersedia -->
+            {% if weather %}
+            <h2 style="color:white; font-weight:300; margin-bottom:20px;">
+                Cuaca untuk kota: {{ city|capitalize }}
+            </h2>
+
+            <table style="width:100%; color:white; border-collapse: collapse;">
+                <tr style="font-weight:bold; border-bottom:1px solid white;">
+                    <td>Hari</td>
+                    <td>Tanggal</td>
+                    <td>Suhu Siang</td>
+                    <td>Suhu Malam</td>
+                </tr>
+
+                {% for w in weather %}
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.3);">
+                    <td>{{ w.day }}</td>
+                    <td>{{ w.date }}</td>
+                    <td>{{ w.day_temp }}°C</td>
+                    <td>{{ w.night_temp }}°C</td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% endif %}
+
+        </div>
+    </div>
+
+    <div class="colorlibcopy-agile">
+        <p>© 2025 Kuis App | Developed by @nissakhra</p>
+    </div>
+
+    <ul class="colorlib-bubbles">
+        <li></li><li></li><li></li><li></li><li></li>
+        <li></li><li></li><li></li><li></li><li></li>
+    </ul>
+</div>
+</body>
+</html>
